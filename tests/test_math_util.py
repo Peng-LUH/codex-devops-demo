@@ -14,3 +14,11 @@ def test_divide_returns_quotient():
 def test_divide_raises_on_zero():
     with pytest.raises(ValueError, match="Cannot divide by zero"):
         math_util.divide(5, 0)
+
+
+def test_subtract_returns_difference():
+    assert math_util.subtract(10, 4) == 6
+
+
+def test_mal_returns_product():
+    assert math_util.mal(3, 4) == 12
