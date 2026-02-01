@@ -14,3 +14,13 @@ def divide(a, b):
     if b == 0:
         raise ValueError("Cannot divide by zero")
     return a / b
+
+
+def subtract(a, b):
+    """Return the result of a minus b."""
+    return a - b
+
+
+def mal(a, b):
+    """Return the product of a and b."""
+    return a * b
