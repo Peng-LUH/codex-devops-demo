@@ -1,23 +1,28 @@
-name: Workflow Demo Step Types
+# This GitHub Actions workflow demonstrates three different step types:
+# 1. Running an inline bash script
+# 2. Running an inline Python script
+# 3. Using a marketplace action
+# It can be manually triggered and showcases basic job and step configuration.
+name: Workflow Demo Step Types # Name of the workflow
 
-on:
-  workflow_dispatch:
+on: # Trigger event for the workflow
+  workflow_dispatch: # Allows manual triggering from GitHub UI
 
-jobs:
-  say-hello-inline-bash:
-    runs-on: ubuntu-24.04
-    steps:
-      - run: echo "Hello from an inline bash script in a GitHub Action Workflow!"
+jobs: # Define jobs to run
+  say-hello-inline-bash: # Job to run an inline bash script
+    runs-on: ubuntu-24.04 # Use Ubuntu 24.04 runner
+    steps: # Steps for this job
+      - run: echo "Hello from an inline bash script in a GitHub Action Workflow!" # Print hello message using bash
       
-  say-hello-inline-python:
-    runs-on: ubuntu-24.04
-    steps:
-      - run: print("Hello from an inline python script in a GitHub Action Workflow!")
-        shell: python
+  say-hello-inline-python: # Job to run an inline Python script
+    runs-on: ubuntu-24.04 # Use Ubuntu 24.04 runner
+    steps: # Steps for this job
+      - run: print("Hello from an inline python script in a GitHub Action Workflow!") # Print hello message using Python
+        shell: python # Specify Python shell for the step
   
-  say-hello-action:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/hello-world-javascript-action@081a6d193d1dcb38460df1e6927486d748730f9d #v1.1
-        with:
-          who-to-greet: "from an action in the GitHub Action marketplace! 👋"
+  say-hello-action: # Job to run a marketplace action
+    runs-on: ubuntu-24.04 # Use Ubuntu 24.04 runner
+    steps: # Steps for this job
+      - uses: actions/hello-world-javascript-action@081a6d193d1dcb38460df1e6927486d748730f9d # Use hello-world JavaScript action from marketplace
+        with: # Input parameters for the action
+          who-to-greet: "from an action in the GitHub Action marketplace! 👋" # Who to greet in the action
