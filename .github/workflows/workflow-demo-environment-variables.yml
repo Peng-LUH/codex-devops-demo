@@ -15,13 +15,13 @@ jobs:
       - name: Inspect scopes job 1 step 1
         env:
           STEP_VAR: I_AM_JOB_1_STEP_1_SCOPED
-        runs: |
+        run: |
           echo "WORKFLOW_VAR:  ${WORKFLOW_VAR:-<UNSET>}  -> this should be visible"
           echo "JOB_VAR:       ${JOB_VAR:-<UNSET>}       -> this should be visible"
           echo "STEP_VAR:      ${STEP_VAR:-<UNSET>}      -> this should be visible"
 
       - name: Inspect scopes job 1 step 2
-        runs: |
+        run: |
           echo "WORKFLOW_VAR:  ${WORKFLOW_VAR:-<UNSET>}  -> this should be visible"
           echo "JOB_VAR:       ${JOB_VAR:-<UNSET>}       -> this should be visible"
           echo "STEP_VAR:      ${STEP_VAR:-<UNSET>}      -> this should be UNSET"
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Inspect scopes of job 2
-        runs: |
+        run: |
           echo "WORKFLOW_VAR:  ${WORKFLOW_VAR:-<UNSET>}  -> this should be visible"
           echo "JOB_VAR:       ${FOO:-<UNSET>}           -> this should be UNSET"
           echo "STEP_VAR:      ${STEP_VAR:-<UNSET>}      -> this should be UNSET"
