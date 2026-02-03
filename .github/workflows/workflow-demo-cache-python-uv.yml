@@ -1,0 +1,48 @@
+name: CI Python with uv
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Install uv + enable uv cache
+        id: setup-uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          # Persists uv's cache via GitHub Actions cache
+          enable-cache: true
+        
+          # Optional but recommended: ensure the cache key changes when these files changes
+          cache-dependency-glob: |
+            **/uv.lock
+            **/pyproject.toml
+          
+          # Optional: if you run multiple resolution strategies in different jobs,
+          # add a suffix to avoid cache-key collisions.
+          # cache-suffix: "-highest"
+      
+      - name: Install dependencies (locked)
+        run: uv sync --locked --all-extras --dev
+      
+      - name: Run tests
+        run: uv run pytest -q
+
+
