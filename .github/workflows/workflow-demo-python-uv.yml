@@ -1,0 +1,59 @@
+name: Workflow Python UV
+
+on:
+  workflow_dispatch:
+
+jobs:
+  uv-example:
+    name: python
+    runs-on: ubuntu-latest
+
+    steps:
+      # step 1: checkout repo
+      - name: checkout-repo
+        uses: actions/checkout@v6 # checkout repository
+
+      ## setup python and install uv
+
+      # ------------------------------------------------------
+      ## Option 1: install uv then using uv to install python
+      ## step 2: install uv
+      # - name: install-uv 
+      #   uses: astral-sh/setup-uv@v7 # setup uv using astral-sh/setup-uv action
+      #   with:
+      #     # It is considered best practice to pin to a specific uv version
+      #     # install a specific version of uv.
+      #     version: "0.9.29"
+      
+      # # step 3: setting up python
+      # - name: setup-python
+      #   run: uv python install
+      # ------------------------------------------------------
+
+      ## Option 2: use official GitHub setup-python action
+      ## step 2: setup python using actions
+      - name: setup-python
+        uses: actions/setup-python@v6
+        with:
+          #### option 1: use the pinned version for the project
+          #### pin a specific version using uv run:: uv python pin 3.12
+          #### this creates a .python-version file under the project root
+          # python-version-file: ".python-version"
+
+          ### option 2:  specify the pyproject.toml file to ignore the pin
+          ### this uses the latest version compatible with the project's requires-python constraint
+          python-version-file: "pyproject.toml"
+
+      ## step 3: install uv with caching enabled
+      - name: install-uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      
+      # ------------------------------------------------------
+      # step 4: syncing and running
+      - name: install-project
+        run: uv sync --locked --all-extras --dev
+      
+      - name: run-tests
+        run: uv run pytest tests
