@@ -1,9 +1,10 @@
 name: pytest # Name of the workflow
 
 on: # Trigger the workflow on the following events
-  push: # When code is pushed
-  pull_request: # When a pull request is opened
-
+  # push: # When code is pushed
+  # pull_request: # When a pull request is opened
+  workflow_dispatch: # run the workflow manually
+    
 jobs: # Define jobs to run
   tests: # Name of the job
     runs-on: ubuntu-latest # Use the latest Ubuntu runner
