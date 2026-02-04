@@ -1,0 +1,31 @@
+name: pytest-uv # Name of the workflow
+
+on: # Trigger the workflow on the following events
+  #push: # When code is pushed
+  #pull_request: # When a pull request is opened
+  workflow_dispatch:
+
+jobs: # Define jobs to run
+  tests: # Name of the job
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps: # List of steps to execute
+      - name: Check out repository # Check out the repository code
+        uses: actions/checkout@v4 # Use the checkout action
+
+      - name: Set up Python # Set up Python environment
+        uses: actions/setup-python@v5 # Use the setup-python action
+        with: # Specify the Python version
+          python-version: ${{ matrix.python-version }} # Set Python version to 3.11
+
+      - name: Set up uv # Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies with uv # Use uv to manage dependencies
+        run: uv sync --locked # Install dependencies from pyproject.toml/uv.lock
+
+      - name: Run tests # Run tests with pytest
+        run: PYTHONPATH=src uv run pytest # Run pytest through uv
