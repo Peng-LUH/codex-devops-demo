@@ -19,6 +19,7 @@ jobs:
           echo "WORKFLOW_VAR:  ${WORKFLOW_VAR:-<UNSET>}  -> this should be visible"
           echo "JOB_VAR:       ${JOB_VAR:-<UNSET>}       -> this should be visible"
           echo "STEP_VAR:      ${STEP_VAR:-<UNSET>}      -> this should be visible"
+          echo "GITHUB_TOKEN:  ${secrets.GITHUB_TOKEN:-<UNSET>} -> this shoud be hashed"
 
       - name: Inspect scopes job 1 step 2
         run: |
